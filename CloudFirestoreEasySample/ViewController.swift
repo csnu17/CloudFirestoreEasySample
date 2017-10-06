@@ -12,6 +12,12 @@ import FirebaseFirestore
 final class ViewController: UIViewController {
     private var engineers: [User] = []
     
+    // TODO: - Declare Cloud Firestore
+    private lazy var defaultStore = Firestore.firestore()
+    
+    // TODO: - Declare listener
+    private var listener: FIRListenerRegistration?
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.tableFooterView = UIView(frame: .zero)
@@ -25,6 +31,24 @@ final class ViewController: UIViewController {
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
         }
+        
+        // TODO: - Add Cloud Firestore listener
+        listener = defaultStore.collection("engineers").addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            
+            // TODO: - Decode data to struct, update dataSource then reload tableView
+            let engineers = document.documents.flatMap { User(document: $0) }
+            self?.engineers = engineers
+            self?.tableView.reloadData()
+        }
+    }
+    
+    // TODO: - Remove listener
+    deinit {
+        listener?.remove()
     }
     
     @IBAction func addItem(_ sender: UIBarButtonItem) {

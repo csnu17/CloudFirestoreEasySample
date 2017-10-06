@@ -14,6 +14,9 @@ final class AddUserViewController: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var programmingSkillsTextField: UITextField!
     
+    // TODO: - Declare Cloud Firestore
+    private let defaultStore = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,6 +32,19 @@ final class AddUserViewController: UIViewController {
                 return
         }
         
-        dismiss(animated: true)
+        // TODO: - Add a new engineer
+        var ref: DocumentReference?
+        ref = defaultStore.collection("engineers").addDocument(data: [
+            "firstName": firstNameInput,
+            "lastName": lastNameInput,
+            "skills": skillsInput.components(separatedBy: ", ")
+        ]) { [weak self] err in
+            if let err = err {
+                print("Error adding document: \(err.localizedDescription)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                self?.dismiss(animated: true)
+            }
+        }
     }
 }
