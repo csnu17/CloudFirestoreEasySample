@@ -23,6 +23,12 @@ final class AddUserViewController: UIViewController {
     }
     
     @IBAction func touchDone(_ sender: UIBarButtonItem) {
+        guard let firstNameInput = firstNameTextField.text, !firstNameInput.isEmpty,
+            let lastNameInput = lastNameTextField.text, !lastNameInput.isEmpty,
+            let skillsInput = programmingSkillsTextField.text, !skillsInput.isEmpty else {
+                return
+        }
+        
         dismiss(animated: true)
     }
 }
