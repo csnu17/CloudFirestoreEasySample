@@ -45,7 +45,18 @@ final class AddUserViewController: UIViewController {
         
         // TODO: - Execute update instead of add
         if let selectedEngineer = selectedEngineer {
-            navigationController?.popViewController(animated: true)
+            defaultStore.collection("engineers").document("\(selectedEngineer.id!)").updateData([
+                "firstName": firstNameInput,
+                "lastName": lastNameInput,
+                "skills": skillsInput.components(separatedBy: ", ")
+            ]) { [weak self] err in
+                if let err = err {
+                    print("Error adding document: \(err.localizedDescription)")
+                } else {
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
+ 
             return
         }
         

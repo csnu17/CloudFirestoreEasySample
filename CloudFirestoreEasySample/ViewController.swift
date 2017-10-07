@@ -93,7 +93,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let deleteRowAction = UITableViewRowAction(style: .default, title: "Delete") { _, _  in
-            // TODO: - Delete engineer (document) via auto generate id
+            // TODO: - Delete engineer (document)
+            self.defaultStore.collection("engineers").document("\(selectedEngineer.id!)").delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
         }
         
         return [deleteRowAction, editRowAction];
