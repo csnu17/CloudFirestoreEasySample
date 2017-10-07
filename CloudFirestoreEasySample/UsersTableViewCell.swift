@@ -15,7 +15,7 @@ final class UsersTableViewCell: UITableViewCell {
     var engineer: User! {
         didSet {
             fullNameLabel.text = "\(engineer.firstName) \(engineer.lastName)"
-            skillsLabel.text = engineer.skills.reduce("Skills:") { $0 + ", " + $1 }
+            skillsLabel.text = "Skills: \(engineer.skills.joined(separator: ", "))"
         }
     }
 }

@@ -46,6 +46,7 @@
                     <connections>
                         <outlet property="tableView" destination="ULT-SF-f9s" id="O36-wj-q5B"/>
                         <segue destination="PAu-0V-33I" kind="presentation" identifier="showAddUsers" id="BXX-aK-tNe"/>
+                        <segue destination="kFD-E0-EeV" kind="show" identifier="showEditUser" id="mcE-Z6-sff"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -176,7 +177,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nv-FJ-w0P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="238.40000000000001" y="103.44827586206897"/>
+            <point key="canvasLocation" x="201" y="562"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="mcE-Z6-sff"/>
+    </inferredMetricsTieBreakers>
 </document>

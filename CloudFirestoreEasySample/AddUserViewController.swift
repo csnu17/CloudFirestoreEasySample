@@ -14,11 +14,22 @@ final class AddUserViewController: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var programmingSkillsTextField: UITextField!
     
+    var selectedEngineer: User?
+    
     // TODO: - Declare Cloud Firestore
     private let defaultStore = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let selectedEngineer = selectedEngineer {
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.title = selectedEngineer.firstName
+            
+            firstNameTextField.text = selectedEngineer.firstName
+            lastNameTextField.text = selectedEngineer.lastName
+            programmingSkillsTextField.text = selectedEngineer.skills.joined(separator: ", ")
+        }
     }
     
     @IBAction func touchCancel(_ sender: UIBarButtonItem) {
@@ -30,6 +41,12 @@ final class AddUserViewController: UIViewController {
             let lastNameInput = lastNameTextField.text, !lastNameInput.isEmpty,
             let skillsInput = programmingSkillsTextField.text, !skillsInput.isEmpty else {
                 return
+        }
+        
+        // TODO: - Execute update instead of add
+        if let selectedEngineer = selectedEngineer {
+            navigationController?.popViewController(animated: true)
+            return
         }
         
         // TODO: - Add a new engineer

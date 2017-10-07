@@ -40,7 +40,12 @@ final class ViewController: UIViewController {
             }
             
             // TODO: - Decode data to struct, update dataSource then reload tableView
-            let engineers = document.documents.flatMap { User(document: $0) }
+            let engineers = document.documents.map { doc -> User? in
+                var engineer = User(document: doc)
+                engineer?.id = doc.documentID
+                return engineer
+                }.flatMap { $0 }
+            
             self?.engineers = engineers
             self?.tableView.reloadData()
         }
@@ -49,6 +54,16 @@ final class ViewController: UIViewController {
     // TODO: - Remove listener
     deinit {
         listener?.remove()
+    }
+    
+    // TODO: - Prepare for edit user page
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEditUser" {
+            if let selectedEngineer = sender as? User {
+                let destinationVC = segue.destination as! AddUserViewController
+                destinationVC.selectedEngineer = selectedEngineer
+            }
+        }
     }
     
     @IBAction func addItem(_ sender: UIBarButtonItem) {
@@ -69,12 +84,16 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // TODO: - Get selected engineer from index
+        let selectedEngineer = engineers[indexPath.row]
+        
         let editRowAction = UITableViewRowAction(style: .default, title: "Edit") { _, _  in
-            
+            // TODO: - Send data to update page (add page but reuse it)
+            self.performSegue(withIdentifier: "showEditUser", sender: selectedEngineer)
         }
         
         let deleteRowAction = UITableViewRowAction(style: .default, title: "Delete") { _, _  in
-            
+            // TODO: - Delete engineer (document) via auto generate id
         }
         
         return [deleteRowAction, editRowAction];
