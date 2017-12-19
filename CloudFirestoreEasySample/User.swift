@@ -15,7 +15,6 @@ struct User {
     let lastName: String
     let skills: [String]
     
-    // TODO: - Create init helper method for document
     init?(document: DocumentSnapshot) {
         let data = document.data()
         guard let firstName = data["firstName"] as? String,
