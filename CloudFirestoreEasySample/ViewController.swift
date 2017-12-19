@@ -16,17 +16,15 @@ final class ViewController: UIViewController {
     private lazy var defaultStore = Firestore.firestore()
     
     // TODO: - Declare listener
-    private var listener: FIRListenerRegistration?
+    private var listener: ListenerRegistration?
     
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.tableFooterView = UIView(frame: .zero)
-            tableView.register(UINib(nibName: "UsersTableViewCell", bundle: nil), forCellReuseIdentifier: "UsersTableViewCell")
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.register(UINib(nibName: "UsersTableViewCell", bundle: nil), forCellReuseIdentifier: "UsersTableViewCell")
         
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -40,11 +38,11 @@ final class ViewController: UIViewController {
             }
             
             // TODO: - Decode data to struct, update dataSource then reload tableView
-            let engineers = document.documents.map { doc -> User? in
+            let engineers = document.documents.flatMap { doc -> User? in
                 var engineer = User(document: doc)
                 engineer?.id = doc.documentID
                 return engineer
-                }.flatMap { $0 }
+            }
             
             self?.engineers = engineers
             self?.tableView.reloadData()
@@ -103,7 +101,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        return [deleteRowAction, editRowAction];
+        return [deleteRowAction, editRowAction]
     }
 }
 
