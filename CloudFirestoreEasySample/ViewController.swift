@@ -39,8 +39,7 @@ final class ViewController: UIViewController {
             
             // TODO: - Decode data to struct, update dataSource then reload tableView
             let engineers = document.documents.flatMap { doc -> User? in
-                var engineer = User(document: doc)
-                engineer?.id = doc.documentID
+                let engineer = User(document: doc)
                 return engineer
             }
             
@@ -92,7 +91,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         let deleteRowAction = UITableViewRowAction(style: .default, title: "Delete") { _, _  in
             // TODO: - Delete engineer (document)
-            self.defaultStore.collection("engineers").document("\(selectedEngineer.id!)").delete() { err in
+            self.defaultStore.collection("engineers").document("\(selectedEngineer.id)").delete() { err in
                 if let err = err {
                     print("Error removing document: \(err)")
                 } else {

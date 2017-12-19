@@ -10,7 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 struct User {
-    var id: String?
+    let id: String
     let firstName: String
     let lastName: String
     let skills: [String]
@@ -24,6 +24,7 @@ struct User {
                 return nil
         }
         
+        self.id = document.documentID
         self.firstName = firstName
         self.lastName = lastName
         self.skills = skills

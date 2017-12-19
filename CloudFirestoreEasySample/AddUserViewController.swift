@@ -45,7 +45,7 @@ final class AddUserViewController: UIViewController {
         
         // TODO: - Execute update instead of add
         if let selectedEngineer = selectedEngineer {
-            defaultStore.collection("engineers").document("\(selectedEngineer.id!)").updateData([
+            defaultStore.collection("engineers").document("\(selectedEngineer.id)").updateData([
                 "firstName": firstNameInput,
                 "lastName": lastNameInput,
                 "skills": skillsInput.components(separatedBy: ", ")
