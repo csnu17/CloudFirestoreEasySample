@@ -37,12 +37,7 @@ final class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEditUser" {
-            if let selectedEngineer = sender as? User {
-                let destinationVC = segue.destination as! AddUserViewController
-                destinationVC.selectedEngineer = selectedEngineer
-            }
-        }
+        // TODO: - Send data to edit screen
     }
     
     @IBAction func addItem(_ sender: UIBarButtonItem) {
