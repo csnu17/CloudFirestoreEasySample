@@ -31,7 +31,6 @@ final class ViewController: UIViewController {
         // TODO: - Add Cloud Firestore listener
     }
     
-    
     deinit {
         // TODO: - Remove listener
     }
